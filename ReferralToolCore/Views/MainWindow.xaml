@@ -1,0 +1,464 @@
+﻿<Window x:Class="ReferralToolCore.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ReferralToolCore.ViewModels"
+        mc:Ignorable="d"
+        Title="Referral Tool v3.0b1 - John M. Wilson &lt;jow9023@nyp.org&gt;"
+        Height="385"
+        Width="750">
+
+    <Window.DataContext>
+        <local:ViewModel />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <local:DateTimeToBackgroundConverter x:Key="DateTimeToBackgroundConverter" />
+        <Style x:Key="ListViewItemDateBackground" TargetType="ListViewItem">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CallStatus}" Value="Calling">
+                    <Setter Property="Foreground" Value="Blue"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DateOfDischarge, Converter={StaticResource DateTimeToBackgroundConverter}}" Value="1">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush>
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#a1ff9e" Offset="0"/>
+                                    <GradientStop Color="#ffffff" Offset="0.5"/>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DateOfDischarge, Converter={StaticResource DateTimeToBackgroundConverter}}" Value="0">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush>
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#ffde93" Offset="0"/>
+                                    <GradientStop Color="#ffffff" Offset="0.5"/>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding DateOfDischarge, Converter={StaticResource DateTimeToBackgroundConverter}}" Value="-1">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush>
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#ff93ad" Offset="0"/>
+                                    <GradientStop Color="#ffffff" Offset="0.5"/>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="ListViewItemDataTemplate">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col0"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col1"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col2"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col3"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col4"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col5"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="0,0,5,0" Text="Call Status:" FontSize="10" FontWeight="Bold"/>
+                    <ComboBox Grid.Row="1" Margin="5,0,5,0"
+                        Grid.Column="0" VerticalAlignment="Top"
+                        SelectedValue="{Binding CallStatus, NotifyOnSourceUpdated=True}"
+                        ItemsSource="{Binding StatusItems}"
+                        SourceUpdated="ComboBox_SourceUpdated"/>
+                </Grid>
+
+                <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Patient Name:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding PatientName}"/>
+                </Grid>
+
+                <Border Grid.Column="3" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="CAD:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding CAD}"/>
+                </Grid>
+
+                <Border Grid.Column="5" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Discharge On:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding DateOfDischarge}"/>
+                </Grid>
+
+                <Border Grid.Column="7" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Time:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding RequestedTime}"/>
+                </Grid>
+
+                <Border Grid.Column="9" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Call Taker:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding CallTaker}"/>
+                </Grid>
+
+                <Border Grid.Column="11" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Nature / Comments:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding Nature}" TextWrapping="Wrap"/>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+        <Style x:Key="ListViewItemHistoryBackground" TargetType="ListViewItem">
+            <Setter Property="Focusable" Value="True"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding CallStatus}" Value="Completed">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush>
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#a1ff9e" Offset="0"/>
+                                    <GradientStop Color="#ffffff" Offset="0.5"/>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding CallStatus}" Value="Cancelled">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush>
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#ff93ad" Offset="0"/>
+                                    <GradientStop Color="#ffffff" Offset="0.5"/>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding CallStatus}" Value="Managed">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush>
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#ffde93" Offset="0"/>
+                                    <GradientStop Color="#ffffff" Offset="0.5"/>
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <DataTemplate x:Key="ListViewItemHistoryDataTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col0"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col1"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col2"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col3"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col4"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto" SharedSizeGroup="Col5"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" VerticalAlignment="Center" FontSize="10" FontWeight="Bold" Text="{Binding Provider}"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" VerticalAlignment="Center" Text="{Binding CallStatus}"/>
+                </Grid>
+
+                <Border Grid.Column="1" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Patient Name:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding PatientName}"/>
+                </Grid>
+
+                <Border Grid.Column="3" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="CAD:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding CAD}"/>
+                </Grid>
+
+                <Border Grid.Column="5" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Discharge On:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding DateOfDischarge, StringFormat={}{0:MM/dd/yyyy}}"/>
+                </Grid>
+
+                <Border Grid.Column="7" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Time:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding RequestedTime}"/>
+                </Grid>
+
+                <Border Grid.Column="9" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Call Taker:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding CallTaker}"/>
+                </Grid>
+
+                <Border Grid.Column="11" BorderBrush="LightGray" BorderThickness="0.6"/>
+
+                <Grid Grid.Column="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Nature / Comments:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding Nature}" TextWrapping="Wrap"/>
+                </Grid>
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="5"/>
+        </Grid.RowDefinitions>
+
+        <!--#region Tab Control-->
+        <TabControl Grid.Row="1" Grid.Column="1"
+                    MouseRightButtonUp="TabControl_MouseRightButtonUp">
+            <TabItem Width="125">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="MAS - Open [ " />
+                        <TextBlock Foreground="Red" FontWeight="Bold" Text="{Binding CollectionElementsActiveMAS}"></TextBlock>
+                        <TextBlock Text=" ]" />
+                    </StackPanel>
+                </TabItem.Header>
+                <ListView ItemsSource="{Binding ReferralCollectionMAS}"
+                          SelectedItem="{Binding SelectedItem}"
+                          Grid.IsSharedSizeScope="True"
+                          SelectionMode="Single"
+                          VirtualizingPanel.IsVirtualizing="True"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          ItemContainerStyle="{StaticResource ListViewItemDateBackground}"
+                          ItemTemplate="{StaticResource ListViewItemDataTemplate}"
+                          MouseDoubleClick="ListViewActive_MouseDoubleClick"/>
+            </TabItem>
+
+            <TabItem Width="125">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="LGTC - Open [ " />
+                        <TextBlock Foreground="Red" FontWeight="Bold" Text="{Binding CollectionElementsActiveLogisticare}"></TextBlock>
+                        <TextBlock Text=" ]" />
+                    </StackPanel>
+                </TabItem.Header>
+
+                <ListView ItemsSource="{Binding ReferralCollectionLogisticare}"
+                          SelectedItem="{Binding SelectedItem}"
+                          Grid.IsSharedSizeScope="True"
+                          SelectionMode="Single"
+                          MouseDoubleClick="ListViewActive_MouseDoubleClick"
+                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                          VirtualizingPanel.IsVirtualizing="True"
+                          ItemContainerStyle="{StaticResource ListViewItemDateBackground}"
+                          ItemTemplate="{StaticResource ListViewItemDataTemplate}">
+                </ListView>
+            </TabItem>
+
+            <TabItem Width="125">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="History [ " />
+                        <TextBlock Foreground="Blue" FontWeight="Bold" Text="{Binding CollectionElementsClosed}"></TextBlock>
+                        <TextBlock Text=" ]" />
+                    </StackPanel>
+                </TabItem.Header>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+                        <DatePicker Margin="0,0,20,0"
+                                    SelectedDate="{Binding HistoryDateSelection}"
+                                    IsEnabled="{Binding IsEnabledHistoryDatePicker}"/>
+                        <Button Content="Refresh Now"
+                                Margin="0,0,20,0"
+                                Padding="15,0,15,0"
+                                Click="HistoryRefreshButton_Click"
+                                IsEnabled="{Binding IsEnabledHistoryDatePicker}"/>
+                        <CheckBox VerticalAlignment="Center"
+                                  Content="Auto-refresh (today only, 60 second interval)"
+                                  IsChecked="{Binding AutoRefresh}"/>
+                    </StackPanel>
+                    <ListView Grid.Row="1"
+                              ItemsSource="{Binding ReferralCollectionHistory}"
+                              ItemContainerStyle="{StaticResource ListViewItemHistoryBackground}"
+                              ItemTemplate="{StaticResource ListViewItemHistoryDataTemplate}"
+                              SelectedItem="{Binding SelectedItem}"
+                              VirtualizingPanel.IsVirtualizing="True"
+                              SelectionMode="Single"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              MouseDoubleClick="ListViewHistory_MouseDoubleClick"
+                              Grid.IsSharedSizeScope="True"/>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+        <!--#endregion-->
+
+        <StatusBar Margin="0,2,0,0" Grid.Column="1" Grid.Row="2">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontSize="10" Text="UID: " FontWeight="Bold"/>
+                    <TextBlock FontSize="10" Text="{Binding UserName}"/>
+                    <TextBlock FontSize="10" Text=" | "/>
+                    <TextBlock FontSize="10" Text="LS: " FontWeight="Bold"/>
+                    <TextBlock FontSize="10" Text="{Binding LastScanTime}"/>
+                    <TextBlock FontSize="10" Text=" | "/>
+                    <TextBlock FontSize="10" Text="SItem: " FontWeight="Bold"/>
+                    <TextBlock FontSize="10" Text="{Binding SelectedItem.ID}"/>
+                    <TextBlock FontSize="10" Text=" | "/>
+                    <TextBlock FontSize="10" Text="API: " FontWeight="Bold"/>
+                    <TextBlock FontSize="10" Text="{Binding StatusMessageAPIStatus}"/>
+                </StackPanel>
+            </StackPanel>
+        </StatusBar>
+
+    </Grid>
+</Window>
