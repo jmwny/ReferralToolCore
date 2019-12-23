@@ -1,7 +1,6 @@
 ﻿using ReferralToolCore.Models;
 using ReferralToolCore.Views;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
@@ -261,7 +260,7 @@ namespace ReferralToolCore.ViewModels
         {
             EditReferralItem = new ReferralData
             {
-                ID = 0,
+                ID = "0",
                 PatientName = string.Empty,
                 CAD = string.Empty,
                 CallStatus = "Active",
@@ -316,19 +315,19 @@ namespace ReferralToolCore.ViewModels
                 return;
 
             // Populate edit history from database
-            var history = await db.GetHistory(SelectedItem.ID.ToString());
-            foreach (KeyValuePair<string, List<object>> entry in history)
+            var history = await db.GetReferralHistoryDetails(SelectedItem.ID);
+            foreach (var entry in history)
             {
                 HistoryData historyDataItem = new HistoryData
                 {
-                    EditTime = entry.Value[1].ToString(),
-                    Name = entry.Value[2].ToString(),
-                    CAD = entry.Value[3].ToString(),
-                    Status = entry.Value[4].ToString(),
-                    DOD = entry.Value[5].ToString(),
-                    ReqTime = entry.Value[6].ToString(),
-                    Nature = entry.Value[7].ToString(),
-                    Provider = entry.Value[8].ToString()
+                    EditTime = entry["EditTime"],
+                    Name = entry["Name"],
+                    CAD = entry["CAD"],
+                    Status = entry["Status"],
+                    DOD = entry["DOD"],
+                    ReqTime = entry["ReqTime"],
+                    Nature = entry["Nature"],
+                    Provider = entry["Provider"]
                 };
                 ReferralHistory.Add(historyDataItem);
             }
@@ -395,7 +394,7 @@ namespace ReferralToolCore.ViewModels
         public async void HistoryRefreshButtonClick()
         {
             var result = await db.GetHistoryCollection(HistoryDateSelection);
-            if (result.ContainsKey("-1"))
+            if (result.Count == 0)
             {
                 StatusMessageAPIStatus = $"GetHistoryCollection: API Failure...";
                 return;
@@ -403,22 +402,23 @@ namespace ReferralToolCore.ViewModels
             else
                 StatusMessageAPIStatus = $"GetHistoryCollection: Returns {result.Count} Elements";
 
-            foreach (KeyValuePair<string, List<object>> entry in result)
+            foreach (var entry in result)
             {
                 ReferralData newReferralData = new ReferralData
                 {
-                    ID = Convert.ToInt64(entry.Value[0].ToString()),
-                    PatientName = entry.Value[1].ToString(),
-                    CAD = entry.Value[2].ToString(),
-                    CallStatus = entry.Value[3].ToString(),
-                    DateOfDischarge = entry.Value[4].ToString(),
-                    RequestedTime = entry.Value[5].ToString(),
-                    CallTaker = entry.Value[6].ToString(),
-                    Nature = entry.Value[7].ToString(),
-                    Provider = entry.Value[8].ToString(),
-                    CreatedDate = entry.Value[9].ToString(),
-                    CreatedTime = entry.Value[10].ToString()
+                    ID = entry["id"],
+                    PatientName = entry["patientName"],
+                    CAD = entry["cad"],
+                    CallStatus = entry["callStatus"],
+                    DateOfDischarge = entry["dateOfDischarge"],
+                    RequestedTime = entry["requestedTime"],
+                    CallTaker = entry["callTaker"],
+                    Nature = entry["nature"],
+                    Provider = entry["provider"],
+                    CreatedDate = entry["createdDate"],
+                    CreatedTime = entry["createdTime"]
                 };
+
                 if (ReferralCollectionHistory.SingleOrDefault(a => a.ID == newReferralData.ID) == null)
                 {
                     ReferralCollectionHistory.Add(newReferralData);
@@ -434,19 +434,19 @@ namespace ReferralToolCore.ViewModels
                 return;
 
             // Populate edit history from database
-            var history = await db.GetHistory(SelectedItem.ID.ToString());
-            foreach (KeyValuePair<string, List<object>> entry in history)
+            var history = await db.GetReferralHistoryDetails(SelectedItem.ID.ToString());
+            foreach (var entry in history)
             {
                 HistoryData historyDataItem = new HistoryData
                 {
-                    EditTime = entry.Value[1].ToString(),
-                    Name = entry.Value[2].ToString(),
-                    CAD = entry.Value[3].ToString(),
-                    Status = entry.Value[4].ToString(),
-                    DOD = entry.Value[5].ToString(),
-                    ReqTime = entry.Value[6].ToString(),
-                    Nature = entry.Value[7].ToString(),
-                    Provider = entry.Value[8].ToString()
+                    EditTime = entry["editTime"],
+                    Name = entry["name"],
+                    CAD = entry["cad"],
+                    Status = entry["status"],
+                    DOD = entry["dod"],
+                    ReqTime = entry["reqTime"],
+                    Nature = entry["nature"],
+                    Provider = entry["provider"]
                 };
                 ReferralHistory.Add(historyDataItem);
             }
@@ -493,26 +493,27 @@ namespace ReferralToolCore.ViewModels
             if (await db.HasMagick())
             {
                 var result = await db.GetOpenCollection();
-                if (result.ContainsKey("-1"))
+                if (result.Count == 0)
                     StatusMessageAPIStatus = $"GetOpenCollection: API Failure...";
                 else
                     StatusMessageAPIStatus = $"GetOpenCollection: Returns {result.Count} Elements";
 
-                foreach (KeyValuePair<string, List<object>> entry in result)
+                foreach (var entry in result)
                 {
+                    System.Diagnostics.Trace.WriteLine($"ViewModel => RebuildCollection(): {entry}");
                     ReferralData newReferralData = new ReferralData
                     {
-                        ID = Convert.ToInt64(entry.Value[0].ToString()),
-                        PatientName = entry.Value[1].ToString(),
-                        CAD = entry.Value[2].ToString(),
-                        CallStatus = entry.Value[3].ToString(),
-                        DateOfDischarge = entry.Value[4].ToString(),
-                        RequestedTime = entry.Value[5].ToString(),
-                        CallTaker = entry.Value[6].ToString(),
-                        Nature = entry.Value[7].ToString(),
-                        Provider = entry.Value[8].ToString(),
-                        CreatedDate = entry.Value[9].ToString(),
-                        CreatedTime = entry.Value[10].ToString()
+                        ID = entry["id"],
+                        PatientName = entry["patientName"],
+                        CAD = entry["cad"],
+                        CallStatus = entry["callStatus"],
+                        DateOfDischarge = entry["dateOfDischarge"],
+                        RequestedTime = entry["requestedTime"],
+                        CallTaker = entry["callTaker"],
+                        Nature = entry["nature"],
+                        Provider = entry["provider"],
+                        CreatedDate = entry["createdDate"],
+                        CreatedTime = entry["createdTime"]
                     };
 
                     // 1) Sort returned referrals and add to temporary collection/s

@@ -25,8 +25,8 @@ namespace ReferralToolCore.Models
             }
         }
 
-        private long _id;
-        public long ID
+        private string _id;
+        public string ID
         {
             get { return _id; }
             set

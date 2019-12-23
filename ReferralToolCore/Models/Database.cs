@@ -14,8 +14,8 @@ namespace ReferralToolCore.Models
         public Database()
         {
             Magick = "0";
-            //client.BaseAddress = new Uri("http://localhost:5000");
-            client.BaseAddress = new Uri("https://referral.api-svr.com");
+            client.BaseAddress = new Uri("https://localhost:44334");
+            //client.BaseAddress = new Uri("https://referral.api-svr.com");
             client.DefaultRequestHeaders.Add("User-Agent", $"{Environment.UserName.ToLower()}");
         }
 
@@ -26,14 +26,15 @@ namespace ReferralToolCore.Models
 
             try
             {
-                var response = await client.GetStringAsync("Magick");
+                var response = await client.GetStringAsync("MagickUpdate");
                 var tempMagick = JsonSerializer.Deserialize<Dictionary<string, int>>(response);
-                newMagick = tempMagick["Magick"].ToString();
+                newMagick = tempMagick["magick"].ToString();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Magick = "0";
                 newMagick = "0";
+                System.Diagnostics.Trace.WriteLine($"Exception in HasMagick(): {ex.Message}");
             }
 
             if (newMagick != Magick)
@@ -46,35 +47,36 @@ namespace ReferralToolCore.Models
         }
 
         // API
-        public async Task<Dictionary<string, List<object>>> GetOpenCollection()
+        public async Task<List<Dictionary<string, string>>> GetOpenCollection()
         {
-            var collectionData = new Dictionary<string, List<object>>();
+            var collectionData = new List<Dictionary<string, string>>();
 
             try
             {
                 var response = await client.GetStringAsync($"Database");
-                collectionData = JsonSerializer.Deserialize<Dictionary<string, List<object>>>(response);
+                collectionData = JsonSerializer.Deserialize<List<Dictionary<string, string>>> (response);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                collectionData.Add("-1", new List<object> { "" });
+                //collectionData.Add(new List<object> { "" });
+                System.Diagnostics.Trace.WriteLine($"Exception in GetOpenCollection(): {ex.Message}");
             }
             return collectionData;
         }
 
         // API
-        public async Task<Dictionary<string, List<object>>> GetHistoryCollection(string reqDate)
+        public async Task<List<Dictionary<string, string>>> GetHistoryCollection(string reqDate)
         {
-            var collectionData = new Dictionary<string, List<object>>();
+            var collectionData = new List<Dictionary<string, string>>();
 
             try
             {
                 var response = await client.GetStringAsync($"History?current_date={reqDate}");
-                collectionData = JsonSerializer.Deserialize<Dictionary<string, List<object>>>(response);
+                collectionData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(response);
             }
             catch (Exception)
             {
-                collectionData.Add("-1", new List<object> { "" });
+                //collectionData.Add("-1", new List<object> { "" });
             }
             return collectionData;
         }
@@ -146,18 +148,18 @@ namespace ReferralToolCore.Models
         }
 
         // API
-        public async Task<Dictionary<string, List<object>>> GetHistory(string reqId)
+        public async Task<List<Dictionary<string, string>>> GetReferralHistoryDetails(string reqId)
         {
-            Dictionary<string, List<object>> collectionData = new Dictionary<string, List<object>>();
+            List<Dictionary<string, string>> collectionData = new List<Dictionary<string, string>>();
 
             try
             {
                 var response = await client.GetStringAsync($"Referral?id={reqId}");
-                collectionData = JsonSerializer.Deserialize<Dictionary<string, List<object>>>(response);
+                collectionData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(response);
             }
             catch (Exception)
             {
-                collectionData.Add("-1", new List<object> { "" });
+                //collectionData.Add("-1", new List<object> { "" });
             }
             return collectionData;
         }
