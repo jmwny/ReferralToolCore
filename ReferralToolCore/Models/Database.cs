@@ -15,12 +15,12 @@ namespace ReferralToolCore.Models
         {
             Magick = "0";
             client.BaseAddress = new Uri("https://localhost:44334");
-            //client.BaseAddress = new Uri("https://referral.api-svr.com");
+            //client.BaseAddress = new Uri("https://referral.helix-1.com");
             client.DefaultRequestHeaders.Add("User-Agent", $"{Environment.UserName.ToLower()}");
         }
 
         // API
-        public async Task<bool> HasMagick()
+        public async Task<bool?> HasMagick()
         {
             string newMagick;
 
@@ -32,14 +32,12 @@ namespace ReferralToolCore.Models
             }
             catch (Exception ex)
             {
-                Magick = "0";
-                newMagick = "0";
                 System.Diagnostics.Trace.WriteLine($"Exception in HasMagick(): {ex.Message}");
+                return null;
             }
 
             if (newMagick != Magick)
             {
-                // There is new magick waiting for us...
                 Magick = newMagick;
                 return true;
             }
@@ -49,16 +47,15 @@ namespace ReferralToolCore.Models
         // API
         public async Task<List<Dictionary<string, string>>> GetOpenCollection()
         {
-            var collectionData = new List<Dictionary<string, string>>();
-
+            List<Dictionary<string, string>> collectionData;
             try
             {
-                var response = await client.GetStringAsync($"Database");
+                var response = await client.GetStringAsync($"ReferralCollection");
                 collectionData = JsonSerializer.Deserialize<List<Dictionary<string, string>>> (response);
             }
             catch (Exception ex)
             {
-                //collectionData.Add(new List<object> { "" });
+                collectionData = null;
                 System.Diagnostics.Trace.WriteLine($"Exception in GetOpenCollection(): {ex.Message}");
             }
             return collectionData;
@@ -67,16 +64,16 @@ namespace ReferralToolCore.Models
         // API
         public async Task<List<Dictionary<string, string>>> GetHistoryCollection(string reqDate)
         {
-            var collectionData = new List<Dictionary<string, string>>();
+            List<Dictionary<string, string>> collectionData;
 
             try
             {
-                var response = await client.GetStringAsync($"History?current_date={reqDate}");
+                var response = await client.GetStringAsync($"ReferralCollection/{reqDate}");
                 collectionData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(response);
             }
             catch (Exception)
             {
-                //collectionData.Add("-1", new List<object> { "" });
+                collectionData = null;
             }
             return collectionData;
         }
@@ -103,7 +100,7 @@ namespace ReferralToolCore.Models
             try
             {
                 var encodedContent = new FormUrlEncodedContent(values);
-                var response = await client.PostAsync("Referral", encodedContent);
+                var response = await client.PostAsync("ReferralItem", encodedContent);
                 returnString = response.StatusCode.ToString();
             }
             catch (Exception e)
@@ -136,7 +133,7 @@ namespace ReferralToolCore.Models
             try
             {
                 var encodedContent = new FormUrlEncodedContent(values);
-                var response = await client.PutAsync("Referral", encodedContent);
+                var response = await client.PutAsync("ReferralItem", encodedContent);
                 returnString = await response.Content.ReadAsStringAsync();
             }
             catch (Exception e)
@@ -154,7 +151,7 @@ namespace ReferralToolCore.Models
 
             try
             {
-                var response = await client.GetStringAsync($"Referral?id={reqId}");
+                var response = await client.GetStringAsync($"ReferralItem?id={reqId}");
                 collectionData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(response);
             }
             catch (Exception)

@@ -320,14 +320,14 @@ namespace ReferralToolCore.ViewModels
             {
                 HistoryData historyDataItem = new HistoryData
                 {
-                    EditTime = entry["EditTime"],
-                    Name = entry["Name"],
-                    CAD = entry["CAD"],
-                    Status = entry["Status"],
-                    DOD = entry["DOD"],
-                    ReqTime = entry["ReqTime"],
-                    Nature = entry["Nature"],
-                    Provider = entry["Provider"]
+                    EditTime = entry["editTime"],
+                    Name = entry["name"],
+                    CAD = entry["cad"],
+                    Status = entry["status"],
+                    DOD = entry["dod"],
+                    ReqTime = entry["reqTime"],
+                    Nature = entry["nature"],
+                    Provider = entry["provider"]
                 };
                 ReferralHistory.Add(historyDataItem);
             }
@@ -394,7 +394,7 @@ namespace ReferralToolCore.ViewModels
         public async void HistoryRefreshButtonClick()
         {
             var result = await db.GetHistoryCollection(HistoryDateSelection);
-            if (result.Count == 0)
+            if (result == null)
             {
                 StatusMessageAPIStatus = $"GetHistoryCollection: API Failure...";
                 return;
@@ -422,7 +422,6 @@ namespace ReferralToolCore.ViewModels
                 if (ReferralCollectionHistory.SingleOrDefault(a => a.ID == newReferralData.ID) == null)
                 {
                     ReferralCollectionHistory.Add(newReferralData);
-                    System.Diagnostics.Trace.WriteLine($"Added ID: {newReferralData.ID}");
                 }
             }
             CollectionElementsClosed = ReferralCollectionHistory.Count.ToString();
@@ -490,17 +489,20 @@ namespace ReferralToolCore.ViewModels
                 dispatcherTimer.Stop();
 
             // Check for new magick (referrals and updates)
-            if (await db.HasMagick())
+            var hasMagick = await db.HasMagick();
+
+            if (hasMagick == null)
+                StatusMessageAPIStatus = $"hasMagick: Exception => API Failure?";
+            else if (hasMagick == true)
             {
                 var result = await db.GetOpenCollection();
-                if (result.Count == 0)
+                if (result == null)
                     StatusMessageAPIStatus = $"GetOpenCollection: API Failure...";
                 else
                     StatusMessageAPIStatus = $"GetOpenCollection: Returns {result.Count} Elements";
 
                 foreach (var entry in result)
                 {
-                    System.Diagnostics.Trace.WriteLine($"ViewModel => RebuildCollection(): {entry}");
                     ReferralData newReferralData = new ReferralData
                     {
                         ID = entry["id"],
