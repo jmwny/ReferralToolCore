@@ -14,8 +14,8 @@ namespace ReferralToolCore.Models
         public Database()
         {
             Magick = "0";
-            client.BaseAddress = new Uri("https://localhost:44334");
-            //client.BaseAddress = new Uri("https://referral.helix-1.com");
+            //client.BaseAddress = new Uri("https://localhost:44334");
+            client.BaseAddress = new Uri("https://referral.helix-1.com");
             client.DefaultRequestHeaders.Add("User-Agent", $"{Environment.UserName.ToLower()}");
         }
 
@@ -48,6 +48,7 @@ namespace ReferralToolCore.Models
         public async Task<List<Dictionary<string, string>>> GetOpenCollection()
         {
             List<Dictionary<string, string>> collectionData;
+
             try
             {
                 var response = await client.GetStringAsync($"ReferralCollection");
@@ -147,7 +148,7 @@ namespace ReferralToolCore.Models
         // API
         public async Task<List<Dictionary<string, string>>> GetReferralHistoryDetails(string reqId)
         {
-            List<Dictionary<string, string>> collectionData = new List<Dictionary<string, string>>();
+            List<Dictionary<string, string>> collectionData;
 
             try
             {
@@ -156,7 +157,7 @@ namespace ReferralToolCore.Models
             }
             catch (Exception)
             {
-                //collectionData.Add("-1", new List<object> { "" });
+                collectionData = null;
             }
             return collectionData;
         }
