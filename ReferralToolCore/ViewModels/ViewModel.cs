@@ -25,41 +25,6 @@ namespace ReferralToolCore.ViewModels
         public ObservableCollection<HistoryData> ReferralHistory { get; } = new ObservableCollection<HistoryData>();
 
         #endregion
-        #region Properties - Tab Counts
-
-        /*
-         * Counts at the top of each open work tab
-         */
-
-        private string _collectionElementsActiveMAS;
-        public string CollectionElementsActiveMAS
-        {
-            get { return _collectionElementsActiveMAS; }
-            set
-            {
-                if (value != this._collectionElementsActiveMAS)
-                {
-                    _collectionElementsActiveMAS = value;
-                    OnPropertyChanged("CollectionElementsActiveMAS");
-                }
-            }
-        }
-
-        private string _collectionElementsActiveLogisticare;
-        public string CollectionElementsActiveLogisticare
-        {
-            get { return _collectionElementsActiveLogisticare; }
-            set
-            {
-                if (value != this._collectionElementsActiveLogisticare)
-                {
-                    _collectionElementsActiveLogisticare = value;
-                    OnPropertyChanged("CollectionElementsActiveLogisticare");
-                }
-            }
-        }
-
-        #endregion
         #region Properties - Other Display Properties
 
         /*
@@ -150,20 +115,6 @@ namespace ReferralToolCore.ViewModels
          * History and archived history related properties
          */
 
-        private string _collectionElementsClosed;
-        public string CollectionElementsClosed
-        {
-            get { return _collectionElementsClosed; }
-            set
-            {
-                if (value != this._collectionElementsClosed)
-                {
-                    _collectionElementsClosed = value;
-                    OnPropertyChanged("CollectionElementsClosed");
-                }
-            }
-        }
-
         private string _historyDateSelection;
         public string HistoryDateSelection
         {
@@ -245,7 +196,6 @@ namespace ReferralToolCore.ViewModels
             historyAutoRefreshTimer.Interval = new TimeSpan(0, 1, 0);
 
             HistoryDateSelection = DateTime.Now.ToString("M-d-yyyy");
-            CollectionElementsClosed = ReferralCollectionHistory.Count.ToString();
             AutoRefresh = false;
             IsEnabledHistoryDatePicker = true;
 
@@ -366,7 +316,7 @@ namespace ReferralToolCore.ViewModels
                         EditReferralItem.CallStatus = "Active";
 
                     var result = await db.UpdateReferral(EditReferralItem);
-                    StatusMessageAPIStatus = $"UpdateReferral: ID = {EditReferralItem.ID.ToString()}, {result.Trim()}";
+                    StatusMessageAPIStatus = $"UpdateReferral: ID = {EditReferralItem.ID}, {result.Trim()}";
                     if (result.Trim() == "false")
                         MessageBox.Show("Referenced object is no longer flagged as active.  Edits cancelled",
                             "Informational", MessageBoxButton.OK, MessageBoxImage.Exclamation);
@@ -424,7 +374,6 @@ namespace ReferralToolCore.ViewModels
                     ReferralCollectionHistory.Add(newReferralData);
                 }
             }
-            CollectionElementsClosed = ReferralCollectionHistory.Count.ToString();
         }
 
         public async void HistoryListViewClick()
@@ -544,8 +493,6 @@ namespace ReferralToolCore.ViewModels
 
             //Update a few UI elements for Status
             LastScanTime = DateTime.Now.ToString("HH:mm:ss");
-            CollectionElementsActiveMAS = $"{ReferralCollectionMAS.Count}";
-            CollectionElementsActiveLogisticare = $"{ReferralCollectionLogisticare.Count}";
             dispatcherTimer.Start();
         }
 
@@ -587,7 +534,7 @@ namespace ReferralToolCore.ViewModels
             await Task.Run(async () =>
             {
                 var result = await db.UpdateReferral(referral);
-                StatusMessageAPIStatus = $"UpdateReferralCallStatus: ID = {referral.ID.ToString()}, {result.Trim()}";
+                StatusMessageAPIStatus = $"UpdateReferralCallStatus: ID = {referral.ID}, {result.Trim()}";
             });
 
             // Remove from collection if referral is no longer active

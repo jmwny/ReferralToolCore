@@ -359,7 +359,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="MAS - Open [ " />
-                        <TextBlock Foreground="Red" FontWeight="Bold" Text="{Binding CollectionElementsActiveMAS}"></TextBlock>
+                        <TextBlock Foreground="Red" FontWeight="Bold" Text="{Binding ReferralCollectionMAS.Count}"></TextBlock>
                         <TextBlock Text=" ]" />
                     </StackPanel>
                 </TabItem.Header>
@@ -378,7 +378,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="LGTC - Open [ " />
-                        <TextBlock Foreground="Red" FontWeight="Bold" Text="{Binding CollectionElementsActiveLogisticare}"></TextBlock>
+                        <TextBlock Foreground="Red" FontWeight="Bold" Text="{Binding ReferralCollectionLogisticare.Count}"></TextBlock>
                         <TextBlock Text=" ]" />
                     </StackPanel>
                 </TabItem.Header>
@@ -399,7 +399,7 @@
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="History [ " />
-                        <TextBlock Foreground="Blue" FontWeight="Bold" Text="{Binding CollectionElementsClosed}"></TextBlock>
+                        <TextBlock Foreground="Blue" FontWeight="Bold" Text="{Binding ReferralCollectionHistory.Count}"></TextBlock>
                         <TextBlock Text=" ]" />
                     </StackPanel>
                 </TabItem.Header>
