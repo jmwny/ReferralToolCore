@@ -406,7 +406,39 @@ namespace ReferralToolCore.ViewModels
                 Owner = Application.Current.MainWindow,
                 DataContext = this
             };
-            viewHistoryDialog.ShowDialog();
+
+            if ( viewHistoryDialog.ShowDialog() == false && viewHistoryDialog.duplicateReferral == true )
+            {
+                // dupe
+                var DupeReferralItem = new ReferralData
+                {
+                    ID = "0",
+                    PatientName = ReferralHistory.Last().Name,
+                    CAD = ReferralHistory.Last().CAD,
+                    CallStatus = "Active",
+                    DateOfDischarge = ReferralHistory.Last().DOD,
+                    RequestedTime = ReferralHistory.Last().ReqTime,
+                    CallTaker = Environment.UserName.ToLower(),
+                    Nature = "[DUPE] " + ReferralHistory.Last().Nature,
+                    Provider = ReferralHistory.Last().Provider,
+                    CreatedDate = DateTime.Now.ToString("M-d-yyyy"),
+                    CreatedTime = DateTime.Now.ToString("HH:mm:ss")
+                };
+
+                // Cleanup the referral object
+                DupeReferralItem.PatientName = DupeReferralItem.PatientName.Trim();
+                DupeReferralItem.CAD = DupeReferralItem.CAD.Trim();
+                DupeReferralItem.RequestedTime = DupeReferralItem.RequestedTime.Trim();
+                DupeReferralItem.Nature = DupeReferralItem.Nature.Trim();
+
+                await Task.Run(async () =>
+                {
+                    var result = await db.InsertIntoCollection(DupeReferralItem);
+                    StatusMessageAPIStatus = result;
+                });
+
+                StatusMessageAPIStatus = "Item duplicated and will be available on next refresh cycle";
+            }
 
             SelectedItem = null;
             ReferralHistory.Clear();

@@ -30,11 +30,7 @@
         <TextBlock Grid.Row="1" Grid.Column="2" Margin="5,2,0,2"
                    Text="{Binding EditReferralItem.PatientName}">
         </TextBlock>
-
-        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Vertical">
-            <TextBlock FontWeight="Bold">Nature /</TextBlock>
-            <TextBlock FontWeight="Bold">Comments:</TextBlock>
-        </StackPanel>
+        <TextBlock Grid.Row="2" Grid.Column="1" FontWeight="Bold">Comments:</TextBlock>
         <TextBlock Grid.Row="2" Grid.Column="2" Margin="5,2,0,2"
                  Text="{Binding EditReferralItem.Nature}" TextWrapping="Wrap">
         </TextBlock>
@@ -47,9 +43,12 @@
                   IsReadOnly="True"
                   ItemsSource="{Binding ReferralHistory}" FontSize="10"/>
 
-        <StackPanel Grid.Row="2" Grid.Column="3">
-            <Button Margin="5,2,0,5" IsDefault="True" IsCancel="True" Name="BtnDialogOk" Click="BtnDialogOk_Click">_Ok</Button>
-        </StackPanel>
+        <Button Margin="5,2,0,5" Grid.Row="1" Grid.Column="3" 
+                IsDefault="True" IsCancel="True" Name="BtnDialogOk" Click="BtnDialogOk_Click">_OK</Button>
+
+        <Button Margin="5,2,0,5" Grid.Row="2" Grid.Column="3" 
+                IsDefault="False" IsCancel="True" Name="BtnDupe" Click="BtnDupe_Click">_Dupe</Button>
+
     </Grid>
 
 </Window>

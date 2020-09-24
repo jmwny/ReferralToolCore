@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Net.NetworkInformation;
+using System.Windows;
 
 namespace ReferralToolCore.Views
 {
@@ -7,6 +8,8 @@ namespace ReferralToolCore.Views
     /// </summary>
     public partial class ViewReferralHistoryDialog : Window
     {
+        public bool duplicateReferral = false;
+
         public ViewReferralHistoryDialog()
         {
             InitializeComponent();
@@ -15,6 +18,12 @@ namespace ReferralToolCore.Views
         private void BtnDialogOk_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
+        }
+
+        private void BtnDupe_Click(object sender, RoutedEventArgs e)
+        {
+            this.duplicateReferral = true;
+            this.DialogResult = false;
         }
     }
 }
