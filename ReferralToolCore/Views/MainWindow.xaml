@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReferralToolCore.ViewModels"
         mc:Ignorable="d"
-        Title="Referral Tool Core v1.1.net5 - John M. Wilson &lt;jow9023@nyp.org&gt;"
+        Title="Referral Tool Core v1.netcore3.1 - John M. Wilson &lt;jow9023@nyp.org&gt;"
         Height="385"
         Width="750">
 

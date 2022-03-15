@@ -52,7 +52,7 @@ namespace ReferralToolCore.Models
             try
             {
                 var response = await client.GetStringAsync($"ReferralCollection");
-                collectionData = JsonSerializer.Deserialize<List<Dictionary<string, string>>> (response);
+                collectionData = JsonSerializer.Deserialize<List<Dictionary<string, string>>>(response);
             }
             catch (Exception ex)
             {

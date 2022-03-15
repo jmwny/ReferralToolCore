@@ -407,7 +407,7 @@ namespace ReferralToolCore.ViewModels
                 DataContext = this
             };
 
-            if ( viewHistoryDialog.ShowDialog() == false && viewHistoryDialog.duplicateReferral == true )
+            if (viewHistoryDialog.ShowDialog() == false && viewHistoryDialog.duplicateReferral == true)
             {
                 // dupe
                 var DupeReferralItem = new ReferralData

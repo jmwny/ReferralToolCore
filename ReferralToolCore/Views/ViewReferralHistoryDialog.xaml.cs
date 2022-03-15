@@ -1,5 +1,4 @@
-﻿using System.Net.NetworkInformation;
-using System.Windows;
+﻿using System.Windows;
 
 namespace ReferralToolCore.Views
 {
