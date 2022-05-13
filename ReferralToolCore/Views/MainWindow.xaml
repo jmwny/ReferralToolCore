@@ -133,7 +133,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Discharge On:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Date:" FontSize="10" FontWeight="Bold"/>
                     <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding DateOfDischarge}"/>
                 </Grid>
 
@@ -289,7 +289,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Discharge On:" FontSize="10" FontWeight="Bold"/>
+                    <TextBlock Grid.Row="0" Padding="5,0,5,0" Text="Date:" FontSize="10" FontWeight="Bold"/>
                     <TextBlock Grid.Row="1" Padding="10,0,5,0" Text="{Binding DateOfDischarge, StringFormat={}{0:MM/dd/yyyy}}"/>
                 </Grid>
 
@@ -355,10 +355,10 @@
         <!--#region Tab Control-->
         <TabControl Grid.Row="1" Grid.Column="1"
                     MouseRightButtonUp="TabControl_MouseRightButtonUp">
-            <TabItem Width="125">
+            <TabItem Width="170">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="MAS - Open [ " />
+                        <TextBlock Text="Med Answering - Open [ " />
                         <TextBlock Foreground="Red" FontWeight="Bold" Text="{Binding ReferralCollectionMAS.Count}"></TextBlock>
                         <TextBlock Text=" ]" />
                     </StackPanel>
@@ -374,10 +374,10 @@
                           MouseDoubleClick="ListViewActive_MouseDoubleClick"/>
             </TabItem>
 
-            <TabItem Width="125">
+            <TabItem Width="170">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="LGTC - Open [ " />
+                        <TextBlock Text="Motivcare - Open [ " />
                         <TextBlock Foreground="Red" FontWeight="Bold" Text="{Binding ReferralCollectionLogisticare.Count}"></TextBlock>
                         <TextBlock Text=" ]" />
                     </StackPanel>
@@ -395,7 +395,7 @@
                 </ListView>
             </TabItem>
 
-            <TabItem Width="125">
+            <TabItem Width="170">
                 <TabItem.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="History [ " />

@@ -15,7 +15,7 @@ namespace ReferralToolCore.Models
         {
             Magick = "0";
             //client.BaseAddress = new Uri("https://localhost:44334");
-            client.BaseAddress = new Uri("https://referral.helix-1.com");
+            client.BaseAddress = new Uri("https://referral.helix-2.com");
             client.DefaultRequestHeaders.Add("User-Agent", $"{Environment.UserName.ToLower()}");
         }
 
