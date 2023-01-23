@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ReferralToolCore.ViewModels"
         mc:Ignorable="d"
-        Title="Referral Tool Core v1.netcore3.1 - John M. Wilson &lt;jow9023@nyp.org&gt;"
+        Title="Referral Tool Core - V1 - John M. Wilson &lt;jow9023@nyp.org&gt;"
         Height="385"
         Width="750">
 
@@ -438,6 +438,25 @@
                               Grid.IsSharedSizeScope="True"/>
                 </Grid>
             </TabItem>
+
+            <!--<TabItem Width="170" Header="Messaging Info">
+                <RichTextBox Margin="10" IsReadOnly="True">
+                    <FlowDocument>
+                        <Paragraph FontSize="18" TextAlignment="Center">
+                            Please visit the following URL for our communication server:
+                            <Hyperlink>https://chat.helix-2.com</Hyperlink>
+                        </Paragraph>
+                        <Paragraph FontSize="18" TextAlignment="Center">
+                            If you would like a desktop application that doesn't require admin privileges and will auto-start after reboot, has better
+                            notification settings and will sit nicely in your taskbar, visit
+                            <Hyperlink>https://mattermost.com/download/#mattermostApps</Hyperlink>
+                        </Paragraph>
+                        <Paragraph FontSize="16" Foreground="Red" TextAlignment="Center">
+                            <Run Text="If you have not received the initial invite to the server, please let me know or e-mail me at 'jow9023@nyp.org' and I'll send one to your work e-mail address."/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+            </TabItem>-->
 
         </TabControl>
         <!--#endregion-->
