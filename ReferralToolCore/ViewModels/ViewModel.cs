@@ -40,7 +40,7 @@ namespace ReferralToolCore.ViewModels
                 if (value != this._userName)
                 {
                     _userName = value;
-                    OnPropertyChanged("UserName");
+                    OnPropertyChanged(nameof(UserName));
                 }
             }
         }
@@ -54,7 +54,7 @@ namespace ReferralToolCore.ViewModels
                 if (value != this._lastScanTime)
                 {
                     _lastScanTime = value;
-                    OnPropertyChanged("LastScanTime");
+                    OnPropertyChanged(nameof(LastScanTime));
                 }
             }
         }
@@ -68,7 +68,7 @@ namespace ReferralToolCore.ViewModels
                 if (value != this._statusMessageAPIStatus)
                 {
                     _statusMessageAPIStatus = value;
-                    OnPropertyChanged("StatusMessageAPIStatus");
+                    OnPropertyChanged(nameof(StatusMessageAPIStatus));
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace ReferralToolCore.ViewModels
                 if (value != this._selectedItem)
                 {
                     _selectedItem = value;
-                    OnPropertyChanged("SelectedItem");
+                    OnPropertyChanged(nameof(SelectedItem));
                 }
             }
         }
@@ -103,7 +103,7 @@ namespace ReferralToolCore.ViewModels
                 if (value != this._editReferralItem)
                 {
                     _editReferralItem = value;
-                    OnPropertyChanged("EditReferralItem");
+                    OnPropertyChanged(nameof(EditReferralItem));
                 }
             }
         }
@@ -127,7 +127,7 @@ namespace ReferralToolCore.ViewModels
                 {
                     ReferralCollectionHistory.Clear();
                     _historyDateSelection = value;
-                    OnPropertyChanged("HistoryDateSelection");
+                    OnPropertyChanged(nameof(HistoryDateSelection));
                 }
             }
         }
@@ -154,7 +154,7 @@ namespace ReferralToolCore.ViewModels
                     }
 
                     _autoRefresh = value;
-                    OnPropertyChanged("AutoRefresh");
+                    OnPropertyChanged(nameof(AutoRefresh));
                 }
             }
         }
@@ -168,7 +168,7 @@ namespace ReferralToolCore.ViewModels
                 if (value != this._isEnabledHistoryDatePicker)
                 {
                     _isEnabledHistoryDatePicker = value;
-                    OnPropertyChanged("IsEnabledHistoryDatePicker");
+                    OnPropertyChanged(nameof(IsEnabledHistoryDatePicker));
                 }
             }
         }
@@ -223,7 +223,7 @@ namespace ReferralToolCore.ViewModels
                 CreatedTime = DateTime.Now.ToString("HH:mm:ss")
             };
 
-            NewReferralDialog newReferralDialog = new NewReferralDialog()
+            NewReferralDialog newReferralDialog = new()
             {
                 Owner = Application.Current.MainWindow,
                 DataContext = this
@@ -232,13 +232,13 @@ namespace ReferralToolCore.ViewModels
 
             if (newReferralDialog.ShowDialog() == true)
             {
-                if (EditReferralItem.PatientName == string.Empty)
+                if (string.IsNullOrWhiteSpace(EditReferralItem.PatientName))
                     EditReferralItem.PatientName = "<none>";
-                if (EditReferralItem.CAD == string.Empty)
+                if (string.IsNullOrWhiteSpace(EditReferralItem.CAD))
                     EditReferralItem.CAD = "<none>";
-                if (EditReferralItem.RequestedTime == string.Empty)
+                if (string.IsNullOrWhiteSpace(EditReferralItem.RequestedTime))
                     EditReferralItem.RequestedTime = "<none>";
-                if (EditReferralItem.Nature == string.Empty)
+                if (string.IsNullOrWhiteSpace(EditReferralItem.Nature))
                     EditReferralItem.Nature = "<none>";
                 if (newReferralDialog.RadioButton_MAS.IsChecked == true)
                     EditReferralItem.Provider = "MAS";
@@ -268,7 +268,7 @@ namespace ReferralToolCore.ViewModels
             var history = await db.GetReferralHistoryDetails(SelectedItem.ID);
             foreach (var entry in history)
             {
-                HistoryData historyDataItem = new HistoryData
+                HistoryData historyDataItem = new()
                 {
                     EditTime = entry["editTime"],
                     Name = entry["name"],
@@ -285,7 +285,7 @@ namespace ReferralToolCore.ViewModels
             EditReferralItem = SelectedItem;
             string oldProvider = EditReferralItem.Provider;
 
-            NewReferralDialog newReferralDialog = new NewReferralDialog()
+            NewReferralDialog newReferralDialog = new()
             {
                 Owner = Application.Current.MainWindow,
                 Title = "Edit Referral Item Data",
@@ -354,7 +354,7 @@ namespace ReferralToolCore.ViewModels
 
             foreach (var entry in result)
             {
-                ReferralData newReferralData = new ReferralData
+                ReferralData newReferralData = new()
                 {
                     ID = entry["id"],
                     PatientName = entry["patientName"],
@@ -385,7 +385,7 @@ namespace ReferralToolCore.ViewModels
             var history = await db.GetReferralHistoryDetails(SelectedItem.ID.ToString());
             foreach (var entry in history)
             {
-                HistoryData historyDataItem = new HistoryData
+                HistoryData historyDataItem = new()
                 {
                     EditTime = entry["editTime"],
                     Name = entry["name"],
@@ -401,7 +401,7 @@ namespace ReferralToolCore.ViewModels
 
             EditReferralItem = SelectedItem;
 
-            ViewReferralHistoryDialog viewHistoryDialog = new ViewReferralHistoryDialog()
+            ViewReferralHistoryDialog viewHistoryDialog = new()
             {
                 Owner = Application.Current.MainWindow,
                 DataContext = this
@@ -461,8 +461,8 @@ namespace ReferralToolCore.ViewModels
 
         private async Task RebuildCollection()
         {
-            ObservableCollection<ReferralData> tmpCollectionMAS = new ObservableCollection<ReferralData>();
-            ObservableCollection<ReferralData> tmpCollectionLogisticare = new ObservableCollection<ReferralData>();
+            ObservableCollection<ReferralData> tmpCollectionMAS = new();
+            ObservableCollection<ReferralData> tmpCollectionLogisticare = new();
 
             if (dispatcherTimer.IsEnabled == false)
                 return;
@@ -484,7 +484,7 @@ namespace ReferralToolCore.ViewModels
 
                 foreach (var entry in result)
                 {
-                    ReferralData newReferralData = new ReferralData
+                    ReferralData newReferralData = new()
                     {
                         ID = entry["id"],
                         PatientName = entry["patientName"],
@@ -537,7 +537,7 @@ namespace ReferralToolCore.ViewModels
             else
                 activeCollection = ReferralCollectionLogisticare;
 
-            for (int i = 0; i <= activeCollection.Count() - 1; i++)
+            for (int i = 0; i <= activeCollection.Count - 1; i++)
             {
                 // If item doesn't exist in temp collectin, pop from active collection
                 ReferralData tmpReferral = tmpReferralCollection.SingleOrDefault(a => a.ID == activeCollection[i].ID);
