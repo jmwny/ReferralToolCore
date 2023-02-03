@@ -173,6 +173,35 @@ namespace ReferralToolCore.ViewModels
             }
         }
 
+        private int _historyMASCount;
+        public int HistoryMASCount
+        {
+            get { return _historyMASCount; }
+            set
+            {
+                if (value != this._historyMASCount)
+                {
+                    _historyMASCount = value;
+                    OnPropertyChanged(nameof(HistoryMASCount));
+                }
+            }
+        }
+
+        private int _historyLGTCCount;
+        public int HistoryLGTCCount
+        {
+            get { return _historyLGTCCount; }
+            set
+            {
+                if (value != this._historyLGTCCount)
+                {
+                    _historyLGTCCount = value;
+                    OnPropertyChanged(nameof(HistoryLGTCCount));
+                }
+            }
+        }
+
+
         #endregion
 
         private readonly DispatcherTimer dispatcherTimer;
@@ -374,6 +403,8 @@ namespace ReferralToolCore.ViewModels
                     ReferralCollectionHistory.Add(newReferralData);
                 }
             }
+            HistoryMASCount = ReferralCollectionHistory.Count(p => p.Provider == "MAS");
+            HistoryLGTCCount = ReferralCollectionHistory.Count(p => p.Provider == "Logisticare");
         }
 
         public async void HistoryListViewClick()

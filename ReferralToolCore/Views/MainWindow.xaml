@@ -400,6 +400,11 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="History [ " />
                         <TextBlock Foreground="Blue" FontWeight="Bold" Text="{Binding ReferralCollectionHistory.Count}"></TextBlock>
+                        <TextBlock Text=" ( M: " />
+                        <TextBlock Foreground="DarkMagenta" FontWeight="Bold" Text="{Binding HistoryMASCount}"></TextBlock>
+                        <TextBlock Text=" / L: " />
+                        <TextBlock Foreground="DarkMagenta" FontWeight="Bold" Text="{Binding HistoryLGTCCount}"></TextBlock>
+                        <TextBlock Text=" ) " />
                         <TextBlock Text=" ]" />
                     </StackPanel>
                 </TabItem.Header>
