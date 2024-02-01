@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:ReferralToolCore.ViewModels"
         mc:Ignorable="d"
         Title="Referral Tool Core - V1.1 - John M. Wilson &lt;jow9023@nyp.org&gt;"
-        Height="385"
-        Width="750">
+        Height="415"
+        Width="750" Loaded="Window_Loaded">
 
     <Window.DataContext>
         <local:ViewModel />
@@ -444,24 +444,37 @@
                 </Grid>
             </TabItem>
 
-            <!--<TabItem Width="170" Header="Messaging Info">
-                <RichTextBox Margin="10" IsReadOnly="True">
-                    <FlowDocument>
-                        <Paragraph FontSize="18" TextAlignment="Center">
-                            Please visit the following URL for our communication server:
-                            <Hyperlink>https://chat.helix-2.com</Hyperlink>
-                        </Paragraph>
-                        <Paragraph FontSize="18" TextAlignment="Center">
-                            If you would like a desktop application that doesn't require admin privileges and will auto-start after reboot, has better
-                            notification settings and will sit nicely in your taskbar, visit
-                            <Hyperlink>https://mattermost.com/download/#mattermostApps</Hyperlink>
-                        </Paragraph>
-                        <Paragraph FontSize="16" Foreground="Red" TextAlignment="Center">
-                            <Run Text="If you have not received the initial invite to the server, please let me know or e-mail me at 'jow9023@nyp.org' and I'll send one to your work e-mail address."/>
-                        </Paragraph>
-                    </FlowDocument>
-                </RichTextBox>
-            </TabItem>-->
+            <TabItem Width="170" Header="Allscripts Reply Generator">
+                <Grid ShowGridLines="False" Margin="5,5,5,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Vendor" Grid.Row="0" Grid.Column="0" Margin="5,5,5,5"/>
+                    <StackPanel  Grid.Row="0" Grid.Column="1" Margin="5,5,5,5">
+                        <RadioButton Content="Assist EMS" Name="Btn_Assist" Checked="Btn_Checked"/>
+                        <RadioButton Content="Citywide" Name="Btn_Citywide" Checked="Btn_Checked"/>
+                        <RadioButton Content="Hunter" Name="Btn_Hunter" Checked="Btn_Checked"/>
+                        <RadioButton Content="Lifeline" Name="Btn_Lifeline" Checked="Btn_Checked"/>
+                        <RadioButton Content="Senior Care" Name="Btn_SCare" Checked="Btn_Checked"/>
+                        <RadioButton Content="Senior Ride" Name="Btn_SRide" Checked="Btn_Checked"/>
+                        <RadioButton Content="Other Vendor" Name="Btn_Other" Checked="Btn_Checked"/>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Grid.Column="0" Margin="5,5,5,5" Grid.ColumnSpan="2">
+                        <TextBlock>Open Referrals</TextBlock>
+                        <Button Margin="5,5,5,5" Name="Btn_referralReceived" Click="Btn_Click">1</Button>
+                        <Button Margin="5,5,5,5" Name="Btn_authRequiredMAS" Click="Btn_Click">2</Button>
+                        <TextBlock>Closed Referral, Next Available</TextBlock>
+                        <Button Margin="5,5,5,5" Name="Btn_closedReferralNextAvail" Click="Btn_Click">3</Button>
+                        <TextBlock>Closed Referral, Prescheduled</TextBlock>
+                        <Button Margin="5,5,5,5" Name="Btn_closedReferralPreSched" Click="Btn_Click">3</Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
 
         </TabControl>
         <!--#endregion-->

@@ -1,5 +1,7 @@
 ﻿using ReferralToolCore.Models;
 using ReferralToolCore.ViewModels;
+using System;
+using System.Net.NetworkInformation;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -11,9 +13,19 @@ namespace ReferralToolCore.Views
     /// </summary>
     public partial class MainWindow : Window
     {
+        string referralReceived = "Referral received. Please standby while we review this referral.";
+        string authRequiredMAS = "Trip # was released to the vendor (if applicable).  Please stand by while we contact insurance to set up transportation. Thank you.";
+        string closedReferralNextAvail = "Trip # on (insert date) with (insert vendor name). The vendor is granted a 3hr window to arrive on scene. You can expect their arrival by (insert standard time) for this request. **Referral is now closed and will no longer be viewed. PLEASE CALL IN ANY CHANGES. DO NOT EDIT. ** Thank you.";
+        string closedReferralPreSched = "Trip # on (insert date) with (insert vendor name). **Referral is now closed and will no longer be viewed. PLEASE CALL IN ANY CHANGES. DO NOT EDIT. ** Thank you.";
+
         public MainWindow()
         {
             InitializeComponent();
+
+            Btn_referralReceived.Content = referralReceived;
+            Btn_authRequiredMAS.Content = authRequiredMAS;
+            Btn_closedReferralNextAvail.Content = closedReferralNextAvail;
+            Btn_closedReferralPreSched.Content = closedReferralPreSched;
         }
 
         // Enter new referral dialog
@@ -44,6 +56,33 @@ namespace ReferralToolCore.Views
         {
             ReferralData rdata = (ReferralData)(sender as ComboBox).DataContext;
             (DataContext as ViewModel).UpdateReferralCallStatus(rdata);
+        }
+
+        private void Btn_Checked(object sender, RoutedEventArgs e)
+        {
+            string text = (sender as RadioButton).Content.ToString();
+
+            string tmpTextMAS = authRequiredMAS.Replace("(if applicable)", text);
+            Btn_authRequiredMAS.Content = tmpTextMAS;
+
+            string tmpTextClosed = closedReferralNextAvail.Replace("(insert vendor name)", text);
+            Btn_closedReferralNextAvail.Content = tmpTextClosed;
+
+            string tmpTextClosedPreSched = closedReferralPreSched.Replace("(insert vendor name)", text);
+            Btn_closedReferralPreSched.Content = tmpTextClosedPreSched;
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            Btn_Assist.IsChecked = true;
+        }
+
+        private void Btn_Click(object sender, RoutedEventArgs e)
+        {
+            string text = (sender as Button).Content.ToString();
+            text = text.Replace("(insert date)", DateTime.Now.ToString());
+            text = text.Replace("(insert standard time)", DateTime.Now.AddHours(3).ToString());
+            Clipboard.SetText(text);
         }
     }
 }
