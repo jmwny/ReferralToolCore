@@ -14,9 +14,9 @@ namespace ReferralToolCore.Views
     public partial class MainWindow : Window
     {
         string referralReceived = "Referral received. Please standby while we review this referral.";
-        string authRequiredMAS = "Trip # was released to the vendor (if applicable).  Please stand by while we contact insurance to set up transportation. Thank you.";
-        string closedReferralNextAvail = "Trip # on (insert date) with (insert vendor name). The vendor is granted a 3hr window to arrive on scene. You can expect their arrival by (insert standard time) for this request. **Referral is now closed and will no longer be viewed. PLEASE CALL IN ANY CHANGES. DO NOT EDIT. ** Thank you.";
-        string closedReferralPreSched = "Trip # on (insert date) with (insert vendor name). **Referral is now closed and will no longer be viewed. PLEASE CALL IN ANY CHANGES. DO NOT EDIT. ** Thank you.";
+        string authRequiredMAS = "Trip #(DISPATCH EDIT) was released to (insert vendor name).  Please stand by while we contact insurance to set up transportation. Thank you.";
+        string closedReferralNextAvail = "Trip #(DISPATCH EDIT) confirmed on (insert date) with (insert vendor name). The vendor is granted a 3hr window to arrive on scene. You can expect their arrival by (insert standard time) for this request. **Referral is now closed and will no longer be viewed. PLEASE CALL IN ANY CHANGES. DO NOT EDIT. ** Thank you.";
+        string closedReferralPreSched = "Trip #(DISPATCH EDIT) on (DISPATCH EDIT) with (insert vendor name). **Referral is now closed and will no longer be viewed. PLEASE CALL IN ANY CHANGES. DO NOT EDIT. ** Thank you.";
 
         public MainWindow()
         {
@@ -62,7 +62,7 @@ namespace ReferralToolCore.Views
         {
             string text = (sender as RadioButton).Content.ToString();
 
-            string tmpTextMAS = authRequiredMAS.Replace("(if applicable)", text);
+            string tmpTextMAS = authRequiredMAS.Replace("(insert vendor name)", text);
             Btn_authRequiredMAS.Content = tmpTextMAS;
 
             string tmpTextClosed = closedReferralNextAvail.Replace("(insert vendor name)", text);
