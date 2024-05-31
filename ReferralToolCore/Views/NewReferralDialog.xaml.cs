@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace ReferralToolCore.Views
 {
@@ -15,6 +16,12 @@ namespace ReferralToolCore.Views
         private void BtnDialogOk_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
+        }
+
+        private void BtnAddDate_Click(object sender, RoutedEventArgs e)
+        {
+            DateTime selectedDT = (DateTime)datePickerDropdown.SelectedDate;
+            datePickerDropdown.SelectedDate = selectedDT.AddDays(1);
         }
     }
 }
