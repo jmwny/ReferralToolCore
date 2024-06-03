@@ -500,6 +500,9 @@
                         <Button Grid.Row="3" Grid.Column="1" Margin="5,5,5,5" Name="Btn_closedReferralNextAvail" Click="Btn_Click" HorizontalAlignment="Left"></Button>
                         <TextBlock Grid.Row="4" Grid.Column="0" Margin="5,5,5,5">5) Closed, Prescheduled</TextBlock>
                         <Button Grid.Row="4" Grid.Column="1" Margin="5,5,5,5" Name="Btn_closedReferralPreSched" Click="Btn_Click" HorizontalAlignment="Left"></Button>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Margin="5,5,5,5"></TextBlock>
+                        <TextBlock Grid.Row="6" Grid.Column="0" Margin="5,5,5,5">Insurance Verification</TextBlock>
+                        <Button Grid.Row="6" Grid.Column="1" Margin="5,5,5,5" Name="Btn_insuranceAuth" Click="Btn_Click" HorizontalAlignment="Left"></Button>
                     </Grid>
                 </Grid>
             </TabItem>
